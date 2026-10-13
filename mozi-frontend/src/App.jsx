@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
 import {
   Home,
   Dumbbell,
@@ -19,6 +20,11 @@ import {
   Clock,
   Flame,
 } from "lucide-react";
+import { fetchDashboard } from "./api";
+
+
+
+
 
 /*
   ============================================================
@@ -29,7 +35,6 @@ import {
 
   Later, when FastAPI is ready, replace the sample data below
   with API calls.
-
   Example:
 
   const response = await fetch("http://localhost:8000/api/dashboard");
@@ -42,7 +47,12 @@ import {
 // ============================================================
 // API CONFIGURATION
 // ============================================================
-
+const skillIcons = {
+  Articulation: Volume2,
+  Pronunciation: Mic,
+  Vocabulary: BookOpen,
+  Fluency: MessageCircle,
+};
 const API_URL = "http://localhost:8000";
 
 
@@ -258,7 +268,7 @@ function Header() {
 // HERO
 // ============================================================
 
-function Hero() {
+function Hero({ streakDays }) {
   return (
     <div className="relative overflow-hidden rounded-[22px] bg-gradient-to-br from-[#FF6B4A] to-[#F6B93B] p-7">
 
@@ -366,8 +376,7 @@ function ContinuePractice() {
 // ============================================================
 // SKILLS
 // ============================================================
-
-function Skills() {
+function Skills({ skills }) {
   return (
     <div>
 
@@ -384,7 +393,7 @@ function Skills() {
       <div className="grid grid-cols-2 xl:grid-cols-4 gap-3">
 
         {skills.map((skill) => {
-          const Icon = skill.icon;
+          const Icon = skillIcons[skill.name];
 
           return (
             <button
@@ -431,7 +440,7 @@ function Skills() {
 // RECENT EXERCISES
 // ============================================================
 
-function RecentExercises() {
+function RecentExercises({ recentExercises, skills }) {
   return (
     <div>
 
@@ -448,8 +457,8 @@ function RecentExercises() {
       <div className="space-y-3">
 
         {recentExercises.map((exercise) => {
-          const skill = getSkill(exercise.skill);
-          const Icon = skill.icon;
+          const skill = skills.find((s) => s.name === exercise.skill) ?? skills[0];
+          const Icon = skillIcons[skill.name];
 
           return (
             <div
@@ -532,7 +541,7 @@ function RecentExercises() {
 // DAILY GOAL
 // ============================================================
 
-function DailyGoal() {
+function DailyGoal({ dailyGoal }) {
   const percent = Math.round(
     (dailyGoal.completedMinutes / dailyGoal.targetMinutes) * 100
   );
@@ -713,7 +722,7 @@ function Therapist() {
 // REWARD
 // ============================================================
 
-function Reward() {
+function Reward({ badgeProgress }) {
   return (
     <div className="relative bg-gradient-to-br from-[#F6B93B] to-[#E6522E] rounded-[28px] p-5 overflow-hidden">
 
@@ -875,11 +884,19 @@ function MobileButton({
 // ============================================================
 
 function Dashboard() {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    fetchDashboard().then(setData).catch(console.error);
+  }, []);
+
+  if (!data) return <p>Loading...</p>;
+
   return (
     <div className="space-y-5">
 
       {/* Hero */}
-      <Hero />
+      <Hero streakDays={data.streakDays} />
 
       {/* Main Content */}
       <div className="grid grid-cols-1 xl:grid-cols-[1fr_300px] gap-5">
@@ -889,22 +906,25 @@ function Dashboard() {
 
           <ContinuePractice />
 
-          <Skills />
+          <Skills skills={data.skills} />
 
-          <RecentExercises />
+          <RecentExercises
+            recentExercises={data.recentExercises}
+            skills={data.skills}
+          />
 
         </div>
 
         {/* RIGHT */}
         <div className="space-y-5">
 
-          <DailyGoal />
+          <DailyGoal dailyGoal={data.dailyGoal} />
 
           <SpeechProgress />
 
           <Therapist />
 
-          <Reward />
+          <Reward badgeProgress={data.badgeProgress} />
 
           <NextSession />
 
@@ -914,6 +934,8 @@ function Dashboard() {
     </div>
   );
 }
+
+      
 
 
 // ============================================================

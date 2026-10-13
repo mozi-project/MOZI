@@ -17,7 +17,7 @@ import {
   Calendar,
   Trophy,
   Clock,
-  Sparkles,
+  Flame,
 } from "lucide-react";
 
 /*
@@ -56,38 +56,42 @@ const user = {
   profileImage: null,
 };
 
+// Single source of truth for each skill's color, so the same skill
+// is drawn with the same color everywhere it shows up (dashboard,
+// recent exercises, progress breakdown) instead of three unrelated
+// color choices for the same thing.
 const skills = [
   {
     name: "Articulation",
     description: "Improve speech sounds",
     exercises: 12,
     icon: Volume2,
-    color: "#7C5CFC",
-    bg: "#EEE9FF",
+    color: "#FF6B4A",
+    bg: "#FFE8E0",
   },
   {
     name: "Pronunciation",
     description: "Speak words clearly",
     exercises: 10,
     icon: Mic,
-    color: "#4EAD78",
-    bg: "#E4F6EC",
+    color: "#1F9E96",
+    bg: "#E1F3F1",
   },
   {
     name: "Vocabulary",
     description: "Build your word bank",
     exercises: 24,
     icon: BookOpen,
-    color: "#D39E24",
-    bg: "#FFF4D6",
+    color: "#C9890F",
+    bg: "#FDF1DC",
   },
   {
     name: "Fluency",
     description: "Speak with confidence",
     exercises: 8,
     icon: MessageCircle,
-    color: "#D77BA7",
-    bg: "#FCEAF3",
+    color: "#B5467A",
+    bg: "#F8E6EF",
   },
 ];
 
@@ -97,29 +101,43 @@ const recentExercises = [
     subtitle: "/R/ Sound",
     duration: "8 min",
     progress: 100,
-    icon: Volume2,
-    color: "#7C5CFC",
-    bg: "#EEE9FF",
+    skill: "Articulation",
   },
   {
     name: "Word Builder",
     subtitle: "Everyday Words",
     duration: "10 min",
     progress: 70,
-    icon: BookOpen,
-    color: "#4EAD78",
-    bg: "#E4F6EC",
+    skill: "Vocabulary",
   },
   {
     name: "Speak & Repeat",
     subtitle: "Sentence Practice",
     duration: "7 min",
     progress: 45,
-    icon: Mic,
-    color: "#D77BA7",
-    bg: "#FCEAF3",
+    skill: "Fluency",
   },
 ];
+
+const streakDays = 5;
+
+const dailyGoal = {
+  completedMinutes: 15,
+  targetMinutes: 20,
+};
+
+const badgeProgress = {
+  completed: 2,
+  needed: 5,
+  name: "Practice Star",
+};
+
+// small helper so recentExercises can just say "skill: 'Articulation'"
+// and automatically pick up that skill's icon + color -- one place to
+// change a color, not three.
+function getSkill(name) {
+  return skills.find((s) => s.name === name) ?? skills[0];
+}
 
 
 // ============================================================
@@ -136,16 +154,16 @@ function Sidebar({ activePage, setActivePage }) {
   ];
 
   return (
-    <aside className="hidden lg:flex fixed left-0 top-0 h-screen w-[220px] bg-white border-r border-[#EAE5F2] p-6 flex-col">
+    <aside className="hidden lg:flex fixed left-0 top-0 h-screen w-[220px] bg-white border-r border-[#ECE4DB] p-6 flex-col">
 
       {/* Logo */}
       <div className="mb-10">
-        <h1 className="text-xl font-bold text-[#302A3D]">
-          MOZI
+        <h1 className="font-display text-2xl font-bold text-[#2A2420]">
+          Mozi
         </h1>
 
-        <p className="text-[10px] text-[#81788F]">
-          Speech Therapy
+        <p className="text-[10px] text-[#87796F]">
+          Speak, play, grow.
         </p>
       </div>
 
@@ -161,8 +179,8 @@ function Sidebar({ activePage, setActivePage }) {
               onClick={() => setActivePage(item.name)}
               className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl text-sm transition ${
                 active
-                  ? "bg-[#F0EBFF] text-[#7C5CFC]"
-                  : "text-[#81788F] hover:bg-[#F8F6FF]"
+                  ? "bg-[#FFE8E0] text-[#E6522E] font-semibold"
+                  : "text-[#87796F] hover:bg-[#FBF9F6]"
               }`}
             >
               <Icon size={18} />
@@ -172,23 +190,26 @@ function Sidebar({ activePage, setActivePage }) {
         })}
       </div>
 
-      {/* Bottom card */}
-      <div className="mt-auto rounded-2xl p-4 bg-gradient-to-br from-[#F2EEFF] to-[#E8F7EF]">
+      {/* Bottom card -- now tied to the child's actual streak instead
+          of a generic motivational placeholder */}
+      <div className="mt-auto rounded-2xl p-4 bg-[#2A2420]">
 
-        <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center mb-3">
-          <Sparkles size={17} className="text-[#7C5CFC]" />
+        <div className="flex items-center gap-2">
+          <Flame size={18} className="text-[#F6B93B]" />
+          <p className="text-sm font-bold text-white">
+            {streakDays}-day streak
+          </p>
         </div>
 
-        <p className="text-xs font-semibold text-[#302A3D]">
-          Keep practicing!
+        <p className="text-[11px] text-white/60 mt-2 leading-4">
+          Practice today to keep it going.
         </p>
 
-        <p className="text-[11px] text-[#81788F] mt-1 leading-4">
-          Small steps every day make a big difference.
-        </p>
-
-        <button className="text-[11px] text-[#7C5CFC] font-semibold mt-3">
-          Start today's practice →
+        <button
+          onClick={() => setActivePage("Practice")}
+          className="text-[11px] text-[#F6B93B] font-bold mt-3"
+        >
+          Start today's practice
         </button>
       </div>
     </aside>
@@ -202,30 +223,30 @@ function Sidebar({ activePage, setActivePage }) {
 
 function Header() {
   return (
-    <header className="h-[62px] border-b border-[#EAE5F2] flex items-center justify-between px-5 lg:px-7 bg-[#F8F7FC]">
+    <header className="h-[62px] border-b border-[#ECE4DB] flex items-center justify-between px-5 lg:px-7 bg-[#FBF9F6]">
 
       <div>
-        <h2 className="text-lg font-bold text-[#302A3D]">
-          Dashboard
+        <h2 className="font-display text-lg font-bold text-[#2A2420]">
+          Hi, {user.name.split(" ")[0]} 👋
         </h2>
 
-        <p className="text-[10px] text-[#81788F]">
-          Continue your speech journey
+        <p className="text-[10px] text-[#87796F]">
+          Ready to practice today?
         </p>
       </div>
 
       <div className="flex items-center gap-3">
 
         {/* Notification */}
-        <button className="relative w-9 h-9 rounded-xl bg-white border border-[#EAE5F2] flex items-center justify-center">
-          <Bell size={17} className="text-[#81788F]" />
+        <button className="relative w-9 h-9 rounded-xl bg-white border border-[#ECE4DB] flex items-center justify-center">
+          <Bell size={17} className="text-[#87796F]" />
 
-          <span className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-[#7C5CFC]" />
+          <span className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-[#FF6B4A]" />
         </button>
 
         {/* Profile */}
-        <button className="w-9 h-9 rounded-xl bg-[#F0EBFF] text-[#7C5CFC] font-bold text-sm">
-          S
+        <button className="w-9 h-9 rounded-xl bg-[#FFE8E0] text-[#E6522E] font-bold text-sm">
+          {user.name.charAt(0)}
         </button>
       </div>
     </header>
@@ -239,39 +260,30 @@ function Header() {
 
 function Hero() {
   return (
-    <div className="relative overflow-hidden rounded-[22px] bg-gradient-to-r from-[#EDE7FF] via-[#DDD4FF] to-[#D8F3E5] p-7">
-
-      {/* Decorative circles */}
-      <div className="absolute -right-5 -top-10 w-32 h-32 rounded-full bg-white/30" />
-
-      <div className="absolute right-24 -bottom-16 w-28 h-28 rounded-full bg-[#A78BFA]/20" />
+    <div className="relative overflow-hidden rounded-[22px] bg-gradient-to-br from-[#FF6B4A] to-[#F6B93B] p-7">
 
       <div className="relative max-w-[600px]">
 
-        <div className="inline-flex items-center gap-2 bg-white/60 px-3 py-1.5 rounded-full text-[10px] font-semibold text-[#6545E8]">
-          <Sparkles size={12} />
-          Your progress matters
+        <div className="inline-flex items-center gap-1.5 bg-white/25 px-3 py-1.5 rounded-full text-[10px] font-bold text-white">
+          <Flame size={12} />
+          {streakDays}-day streak -- don't break it!
         </div>
 
-        <h1 className="text-3xl font-bold text-[#302A3D] mt-4">
-          Your speech journey{" "}
-          <span className="text-[#7C5CFC]">
-            continues!
-          </span>
+        <h1 className="font-display text-3xl font-bold text-white mt-4">
+          Ready for today's practice?
         </h1>
 
-        <p className="text-sm text-[#655D70] mt-3 max-w-[500px]">
-          Practice a little every day, build confidence, and make
-          your communication stronger.
+        <p className="text-sm text-white/85 mt-3 max-w-[500px]">
+          Pick up your /R/ Sound exercise and keep building your streak.
         </p>
 
         <button
           className="mt-5 flex items-center gap-2 px-5 py-2.5 rounded-xl
-          bg-[#7C5CFC] text-white text-xs font-semibold
-          hover:bg-[#6545E8] transition"
+          bg-white text-[#E6522E] text-xs font-bold
+          hover:bg-white/90 transition"
         >
-          <Play size={14} fill="white" />
-          Start Practice
+          <Play size={14} fill="#E6522E" />
+          Start /R/ Sound Practice
         </button>
       </div>
     </div>
@@ -285,65 +297,64 @@ function Hero() {
 
 function ContinuePractice() {
   return (
-    <div className="bg-white border border-[#EAE5F2] rounded-2xl p-5">
+    <div className="bg-white border border-[#ECE4DB] rounded-2xl p-5">
 
       <div className="flex justify-between items-center">
 
         <div>
-          <p className="text-[10px] font-semibold text-[#81788F]">
-            CONTINUE PRACTICE
-          </p>
-
-          <h2 className="text-base font-bold text-[#302A3D] mt-1">
-            Articulation Practice
+          <h2 className="font-display text-lg font-bold text-[#2A2420]">
+            Pick up where you left off
           </h2>
+          <p className="text-[11px] text-[#87796F] mt-0.5">
+            Articulation Practice
+          </p>
         </div>
 
-        <div className="w-9 h-9 rounded-xl bg-[#F0EBFF] flex items-center justify-center">
-          <Volume2 size={17} className="text-[#7C5CFC]" />
+        <div className="w-9 h-9 rounded-xl bg-[#FFE8E0] flex items-center justify-center">
+          <Volume2 size={17} className="text-[#FF6B4A]" />
         </div>
       </div>
 
       {/* Exercise */}
-      <div className="mt-5 bg-[#F8F6FF] rounded-xl p-4">
+      <div className="mt-5 bg-[#FBF9F6] rounded-xl p-4">
 
         <div className="flex justify-between">
 
           <div>
-            <p className="text-xs font-semibold text-[#302A3D]">
+            <p className="text-xs font-semibold text-[#2A2420]">
               /R/ Sound
             </p>
 
-            <p className="text-[10px] text-[#81788F] mt-1">
-              Level 4 • Intermediate
+            <p className="text-[10px] text-[#87796F] mt-1">
+              Level 4 - Intermediate
             </p>
           </div>
 
-          <p className="text-xs font-bold text-[#7C5CFC]">
+          <p className="text-xs font-bold text-[#FF6B4A]">
             70%
           </p>
         </div>
 
         {/* Progress */}
-        <div className="h-1.5 bg-[#E8E3F4] rounded-full mt-3">
+        <div className="h-1.5 bg-[#ECE4DB] rounded-full mt-3">
           <div
-            className="h-full bg-[#7C5CFC] rounded-full"
+            className="h-full bg-[#FF6B4A] rounded-full"
             style={{ width: "70%" }}
           />
         </div>
 
         <div className="flex justify-between mt-2">
-          <p className="text-[10px] text-[#81788F]">
+          <p className="text-[10px] text-[#87796F]">
             7 of 10 exercises
           </p>
 
-          <p className="text-[10px] text-[#81788F]">
+          <p className="text-[10px] text-[#87796F]">
             3 remaining
           </p>
         </div>
       </div>
 
-      <button className="w-full mt-4 py-3 rounded-xl bg-[#7C5CFC] text-white text-xs font-semibold flex items-center justify-center gap-2 hover:bg-[#6545E8]">
+      <button className="w-full mt-4 py-3 rounded-xl bg-[#FF6B4A] text-white text-xs font-bold flex items-center justify-center gap-2 hover:bg-[#E6522E]">
         Continue
         <ChevronRight size={15} />
       </button>
@@ -361,19 +372,12 @@ function Skills() {
     <div>
 
       <div className="flex justify-between items-end mb-4">
+        <h2 className="font-display text-lg font-bold text-[#2A2420]">
+          Your skills
+        </h2>
 
-        <div>
-          <p className="text-[10px] font-semibold text-[#81788F]">
-            PRACTICE AREAS
-          </p>
-
-          <h2 className="text-base font-bold text-[#302A3D] mt-1">
-            Your Skills
-          </h2>
-        </div>
-
-        <button className="text-[10px] text-[#7C5CFC] font-semibold">
-          View all
+        <button className="text-[11px] text-[#FF6B4A] font-bold">
+          See all skills
         </button>
       </div>
 
@@ -385,7 +389,7 @@ function Skills() {
           return (
             <button
               key={skill.name}
-              className="bg-white border border-[#EAE5F2] rounded-2xl p-4 text-left hover:shadow-sm transition"
+              className="bg-white border border-[#ECE4DB] rounded-2xl p-4 text-left hover:shadow-sm transition"
             >
 
               <div
@@ -395,17 +399,17 @@ function Skills() {
                 <Icon size={17} style={{ color: skill.color }} />
               </div>
 
-              <h3 className="text-xs font-bold text-[#302A3D] mt-4">
+              <h3 className="text-xs font-bold text-[#2A2420] mt-4">
                 {skill.name}
               </h3>
 
-              <p className="text-[10px] text-[#81788F] mt-1">
+              <p className="text-[10px] text-[#87796F] mt-1">
                 {skill.description}
               </p>
 
               <div className="flex justify-between items-center mt-4">
 
-                <span className="text-[9px] text-[#81788F]">
+                <span className="text-[9px] text-[#87796F]">
                   {skill.exercises} exercises
                 </span>
 
@@ -432,42 +436,34 @@ function RecentExercises() {
     <div>
 
       <div className="flex justify-between items-end mb-4">
+        <h2 className="font-display text-lg font-bold text-[#2A2420]">
+          Recent exercises
+        </h2>
 
-        <div>
-          <p className="text-[10px] font-semibold text-[#81788F]">
-            KEEP GOING
-          </p>
-
-          <h2 className="text-base font-bold text-[#302A3D] mt-1">
-            Recent Exercises
-          </h2>
-        </div>
-
-        <button className="text-[10px] text-[#7C5CFC] font-semibold">
-          See all
+        <button className="text-[11px] text-[#FF6B4A] font-bold">
+          See all exercises
         </button>
       </div>
 
       <div className="space-y-3">
 
         {recentExercises.map((exercise) => {
-          const Icon = exercise.icon;
+          const skill = getSkill(exercise.skill);
+          const Icon = skill.icon;
 
           return (
             <div
               key={exercise.name}
-              className="bg-white border border-[#EAE5F2] rounded-2xl p-4 flex items-center gap-3"
+              className="bg-white border border-[#ECE4DB] rounded-2xl p-4 flex items-center gap-3"
             >
 
-              {/* Icon */}
+              {/* Icon -- reuses the skill's own color, so "Word Builder"
+                  always looks like Vocabulary everywhere it appears */}
               <div
                 className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
-                style={{ backgroundColor: exercise.bg }}
+                style={{ backgroundColor: skill.bg }}
               >
-                <Icon
-                  size={17}
-                  style={{ color: exercise.color }}
-                />
+                <Icon size={17} style={{ color: skill.color }} />
               </div>
 
               {/* Details */}
@@ -476,11 +472,11 @@ function RecentExercises() {
                 <div className="flex justify-between">
 
                   <div>
-                    <p className="text-xs font-bold text-[#302A3D]">
+                    <p className="text-xs font-bold text-[#2A2420]">
                       {exercise.name}
                     </p>
 
-                    <p className="text-[10px] text-[#81788F] mt-0.5">
+                    <p className="text-[10px] text-[#87796F] mt-0.5">
                       {exercise.subtitle}
                     </p>
                   </div>
@@ -488,23 +484,24 @@ function RecentExercises() {
                   {exercise.progress === 100 && (
                     <CheckCircle2
                       size={17}
-                      className="text-[#65C18C]"
+                      className="text-[#4EAD78]"
                     />
                   )}
                 </div>
 
                 <div className="flex items-center gap-2 mt-2">
 
-                  <div className="flex-1 h-1.5 bg-[#ECE8F3] rounded-full">
+                  <div className="flex-1 h-1.5 bg-[#ECE4DB] rounded-full">
                     <div
-                      className="h-full bg-[#7C5CFC] rounded-full"
+                      className="h-full rounded-full"
                       style={{
                         width: `${exercise.progress}%`,
+                        backgroundColor: skill.color,
                       }}
                     />
                   </div>
 
-                  <span className="text-[9px] text-[#81788F] flex items-center gap-1">
+                  <span className="text-[9px] text-[#87796F] flex items-center gap-1">
                     <Clock size={10} />
                     {exercise.duration}
                   </span>
@@ -512,11 +509,14 @@ function RecentExercises() {
               </div>
 
               {/* Play */}
-              <button className="hidden sm:flex w-8 h-8 rounded-lg bg-[#F0EBFF] items-center justify-center">
+              <button
+                className="hidden sm:flex w-8 h-8 rounded-lg items-center justify-center"
+                style={{ backgroundColor: skill.bg }}
+              >
                 <Play
                   size={13}
-                  fill="#7C5CFC"
-                  className="text-[#7C5CFC]"
+                  fill={skill.color}
+                  style={{ color: skill.color }}
                 />
               </button>
             </div>
@@ -533,24 +533,22 @@ function RecentExercises() {
 // ============================================================
 
 function DailyGoal() {
+  const percent = Math.round(
+    (dailyGoal.completedMinutes / dailyGoal.targetMinutes) * 100
+  );
+  const remaining = dailyGoal.targetMinutes - dailyGoal.completedMinutes;
+
   return (
-    <div className="bg-white border border-[#EAE5F2] rounded-2xl p-5">
+    <div className="bg-white border border-[#ECE4DB] rounded-2xl p-5">
 
       <div className="flex justify-between">
-
-        <div>
-          <p className="text-[10px] font-semibold text-[#81788F]">
-            DAILY GOAL
-          </p>
-
-          <h2 className="text-base font-bold text-[#302A3D] mt-1">
-            Keep your streak
-          </h2>
-        </div>
+        <h2 className="font-display text-lg font-bold text-[#2A2420]">
+          Keep your streak
+        </h2>
 
         <Target
           size={17}
-          className="text-[#7C5CFC]"
+          className="text-[#FF6B4A]"
         />
       </div>
 
@@ -560,18 +558,17 @@ function DailyGoal() {
         <div
           className="w-28 h-28 rounded-full flex items-center justify-center"
           style={{
-            background:
-              "conic-gradient(#7C5CFC 0deg 270deg, #E9E4F3 270deg)",
+            background: `conic-gradient(#FF6B4A 0deg ${percent * 3.6}deg, #ECE4DB ${percent * 3.6}deg)`,
           }}
         >
           <div className="w-20 h-20 rounded-full bg-white flex flex-col items-center justify-center">
 
-            <p className="text-xl font-bold text-[#302A3D]">
-              15
+            <p className="text-xl font-bold text-[#2A2420]">
+              {dailyGoal.completedMinutes}
             </p>
 
-            <p className="text-[10px] text-[#81788F]">
-              / 20 min
+            <p className="text-[10px] text-[#87796F]">
+              / {dailyGoal.targetMinutes} min
             </p>
           </div>
         </div>
@@ -579,11 +576,11 @@ function DailyGoal() {
 
       <div className="text-center mt-5">
 
-        <p className="text-xs font-semibold text-[#302A3D]">
-          5 minutes to go!
+        <p className="text-xs font-semibold text-[#2A2420]">
+          {remaining} minutes to go!
         </p>
 
-        <p className="text-[10px] text-[#81788F] mt-1">
+        <p className="text-[10px] text-[#87796F] mt-1">
           You are doing great today.
         </p>
       </div>
@@ -598,23 +595,16 @@ function DailyGoal() {
 
 function SpeechProgress() {
   return (
-    <div className="bg-white border border-[#EAE5F2] rounded-2xl p-5">
+    <div className="bg-white border border-[#ECE4DB] rounded-2xl p-5">
 
       <div className="flex justify-between">
-
-        <div>
-          <p className="text-[10px] font-semibold text-[#81788F]">
-            OVERALL PROGRESS
-          </p>
-
-          <h2 className="text-base font-bold text-[#302A3D] mt-1">
-            Speech Progress
-          </h2>
-        </div>
+        <h2 className="font-display text-lg font-bold text-[#2A2420]">
+          Speech progress
+        </h2>
 
         <BarChart3
           size={17}
-          className="text-[#65C18C]"
+          className="text-[#4EAD78]"
         />
       </div>
 
@@ -625,33 +615,21 @@ function SpeechProgress() {
             78%
           </p>
 
-          <p className="text-[10px] text-[#81788F]">
+          <p className="text-[10px] text-[#87796F]">
             Overall improvement
           </p>
         </div>
 
-        <span className="text-[9px] font-semibold text-[#429E6B] bg-[#E4F6EC] px-2 py-1 rounded-full">
+        <span className="text-[9px] font-semibold text-[#2F8A5B] bg-[#E4F6EC] px-2 py-1 rounded-full">
           +8% this month
         </span>
       </div>
 
-      <ProgressBar
-        name="Articulation"
-        value={82}
-        color="#7C5CFC"
-      />
-
-      <ProgressBar
-        name="Pronunciation"
-        value={76}
-        color="#65C18C"
-      />
-
-      <ProgressBar
-        name="Fluency"
-        value={68}
-        color="#F6C85F"
-      />
+      {/* Each skill's breakdown uses that same skill's color -- same
+          fix as Recent Exercises, one color mapping for the whole app */}
+      <ProgressBar name="Articulation" value={82} color={getSkill("Articulation").color} />
+      <ProgressBar name="Pronunciation" value={76} color={getSkill("Pronunciation").color} />
+      <ProgressBar name="Fluency" value={68} color={getSkill("Fluency").color} />
     </div>
   );
 }
@@ -666,18 +644,16 @@ function ProgressBar({ name, value, color }) {
     <div className="mt-4">
 
       <div className="flex justify-between mb-1">
-
-        <span className="text-[10px] text-[#655D70]">
+        <span className="text-[10px] text-[#5A5047]">
           {name}
         </span>
 
-        <span className="text-[10px] font-semibold text-[#302A3D]">
+        <span className="text-[10px] font-semibold text-[#2A2420]">
           {value}%
         </span>
       </div>
 
-      <div className="h-1.5 bg-[#ECE8F3] rounded-full">
-
+      <div className="h-1.5 bg-[#ECE4DB] rounded-full">
         <div
           className="h-full rounded-full"
           style={{
@@ -697,34 +673,35 @@ function ProgressBar({ name, value, color }) {
 
 function Therapist() {
   return (
-    <div className="bg-[#F2EEFF] rounded-2xl p-5">
+    <div className="bg-[#E1F3F1] rounded-2xl p-5">
 
       <div className="flex justify-between">
 
         <div>
-          <p className="text-[10px] font-semibold text-[#81788F]">
-            YOUR THERAPIST
-          </p>
-
-          <h2 className="text-base font-bold text-[#302A3D] mt-1">
+          <h2 className="font-display text-base font-bold text-[#2A2420]">
             Dr. Ananya
           </h2>
+          <p className="text-[10px] text-[#87796F] mt-0.5">
+            Your therapist
+          </p>
         </div>
 
-        <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center">
-          👩‍⚕️
+        {/* Same initial-avatar treatment as the Header profile button,
+            instead of a one-off emoji nothing else in the app uses */}
+        <div className="w-10 h-10 rounded-full bg-[#1F9E96] text-white flex items-center justify-center font-bold text-sm">
+          A
         </div>
       </div>
 
-      <div className="flex items-center gap-2 mt-4 text-[10px] text-[#655D70]">
+      <div className="flex items-center gap-2 mt-4 text-[10px] text-[#5A5047]">
         <CheckCircle2
           size={14}
-          className="text-[#65C18C]"
+          className="text-[#1F9E96]"
         />
         Feedback available
       </div>
 
-      <button className="w-full bg-white rounded-xl py-2.5 mt-4 text-[10px] font-semibold text-[#7C5CFC]">
+      <button className="w-full bg-white rounded-xl py-2.5 mt-4 text-[10px] font-bold text-[#1F9E96]">
         View Feedback
       </button>
     </div>
@@ -738,34 +715,32 @@ function Therapist() {
 
 function Reward() {
   return (
-    <div className="bg-[#FFF4D6] rounded-2xl p-5">
+    <div className="relative bg-gradient-to-br from-[#F6B93B] to-[#E6522E] rounded-[28px] p-5 overflow-hidden">
 
-      <div className="flex justify-between">
+      <Trophy size={64} className="absolute -right-3 -bottom-3 text-white/15" />
 
-        <div>
-          <p className="text-[10px] font-semibold text-[#9B7A24]">
-            LATEST REWARD
-          </p>
+      <p className="text-[11px] font-bold text-white/80">
+        Latest reward
+      </p>
+      <h2 className="font-display text-xl font-bold text-white mt-0.5">
+        {badgeProgress.name}
+      </h2>
 
-          <h2 className="text-base font-bold text-[#5E4B1D] mt-1">
-            Practice Star
-          </h2>
-        </div>
-
-        <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center">
-          <Trophy
-            size={18}
-            className="text-[#D39E24]"
-          />
-        </div>
-      </div>
-
-      <p className="text-[10px] text-[#806D38] mt-3 leading-4">
-        Complete 3 more exercises to unlock your next achievement.
+      <p className="text-[11px] text-white/85 mt-3 leading-4 relative">
+        {badgeProgress.needed - badgeProgress.completed} more exercises to your next badge
       </p>
 
-      <div className="h-1.5 bg-white/70 rounded-full mt-4">
-        <div className="w-[65%] h-full bg-[#F6C85F] rounded-full" />
+      {/* Progress shown as filled pips -- feels like a game reward
+          tracker, not a generic data progress bar */}
+      <div className="flex gap-1.5 mt-4 relative">
+        {Array.from({ length: badgeProgress.needed }).map((_, i) => (
+          <div
+            key={i}
+            className={`h-2 flex-1 rounded-full ${
+              i < badgeProgress.completed ? "bg-white" : "bg-white/30"
+            }`}
+          />
+        ))}
       </div>
     </div>
   );
@@ -778,47 +753,40 @@ function Reward() {
 
 function NextSession() {
   return (
-    <div className="bg-white border border-[#EAE5F2] rounded-2xl p-5">
+    <div className="bg-white border border-[#ECE4DB] rounded-2xl p-5">
 
       <div className="flex justify-between">
-
-        <div>
-          <p className="text-[10px] font-semibold text-[#81788F]">
-            NEXT SESSION
-          </p>
-
-          <h2 className="text-base font-bold text-[#302A3D] mt-1">
-            Therapist Session
-          </h2>
-        </div>
+        <h2 className="font-display text-base font-bold text-[#2A2420]">
+          Therapist session
+        </h2>
 
         <Calendar
           size={17}
-          className="text-[#7C5CFC]"
+          className="text-[#1F9E96]"
         />
       </div>
 
-      <div className="bg-[#F8F6FF] rounded-xl p-3 mt-4 flex items-center gap-3">
+      <div className="bg-[#E1F3F1] rounded-xl p-3 mt-4 flex items-center gap-3">
 
-        <div className="w-9 h-9 bg-[#EEE9FF] rounded-lg flex items-center justify-center">
+        <div className="w-9 h-9 bg-white rounded-lg flex items-center justify-center">
           <Calendar
             size={16}
-            className="text-[#7C5CFC]"
+            className="text-[#1F9E96]"
           />
         </div>
 
         <div>
-          <p className="text-xs font-bold text-[#302A3D]">
+          <p className="text-xs font-bold text-[#2A2420]">
             Tomorrow
           </p>
 
-          <p className="text-[10px] text-[#81788F] mt-1">
-            4:00 PM • 30 minutes
+          <p className="text-[10px] text-[#87796F] mt-1">
+            4:00 PM - 30 minutes
           </p>
         </div>
       </div>
 
-      <button className="w-full border border-[#E5DEF5] rounded-xl py-2.5 mt-3 text-[10px] font-semibold text-[#7C5CFC]">
+      <button className="w-full border border-[#D9EEEC] rounded-xl py-2.5 mt-3 text-[10px] font-bold text-[#1F9E96]">
         View Session
       </button>
     </div>
@@ -832,7 +800,7 @@ function NextSession() {
 
 function MobileNavigation({ activePage, setActivePage }) {
   return (
-    <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-[#EAE5F2] z-50">
+    <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-[#ECE4DB] z-50">
 
       <div className="flex justify-around items-center py-2">
 
@@ -852,7 +820,7 @@ function MobileNavigation({ activePage, setActivePage }) {
 
         <button
           onClick={() => setActivePage("Practice")}
-          className="w-12 h-12 rounded-full bg-[#7C5CFC] text-white flex items-center justify-center -mt-6 shadow-lg"
+          className="w-12 h-12 rounded-full bg-[#FF6B4A] text-white flex items-center justify-center -mt-6 shadow-lg"
         >
           <Mic size={20} />
         </button>
@@ -889,7 +857,7 @@ function MobileButton({
     <button
       onClick={() => setActivePage(name)}
       className={`flex flex-col items-center gap-1 ${
-        active ? "text-[#7C5CFC]" : "text-[#81788F]"
+        active ? "text-[#FF6B4A]" : "text-[#87796F]"
       }`}
     >
       <Icon size={18} />
@@ -958,29 +926,29 @@ function OtherPage({ name }) {
 
       <div className="text-center">
 
-        <div className="w-14 h-14 mx-auto rounded-2xl bg-[#F0EBFF] flex items-center justify-center">
+        <div className="w-14 h-14 mx-auto rounded-2xl bg-[#FFE8E0] flex items-center justify-center">
           {name === "Exercises" && (
-            <Dumbbell className="text-[#7C5CFC]" />
+            <Dumbbell className="text-[#FF6B4A]" />
           )}
 
           {name === "Progress" && (
-            <BarChart3 className="text-[#7C5CFC]" />
+            <BarChart3 className="text-[#FF6B4A]" />
           )}
 
           {name === "Profile" && (
-            <User className="text-[#7C5CFC]" />
+            <User className="text-[#FF6B4A]" />
           )}
 
           {name === "Settings" && (
-            <Settings className="text-[#7C5CFC]" />
+            <Settings className="text-[#FF6B4A]" />
           )}
         </div>
 
-        <h1 className="text-xl font-bold text-[#302A3D] mt-4">
+        <h1 className="font-display text-xl font-bold text-[#2A2420] mt-4">
           {name}
         </h1>
 
-        <p className="text-sm text-[#81788F] mt-2">
+        <p className="text-sm text-[#87796F] mt-2">
           This page will be connected to the backend.
         </p>
       </div>
@@ -1012,7 +980,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F8F7FC]">
+    <div className="min-h-screen bg-[#FBF9F6]">
 
       {/* Desktop Sidebar */}
       <Sidebar

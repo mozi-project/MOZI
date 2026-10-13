@@ -1,23 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&display=swap');
 @import "tailwindcss";
 
 :root {
-  --mozi-bg: #f8f7fc;
+  --mozi-bg: #FBF9F6;
   --mozi-card: #ffffff;
 
-  --mozi-primary: #7c5cfc;
-  --mozi-primary-dark: #6545e8;
-  --mozi-lavender: #a78bfa;
+  /* Primary accent: warm coral instead of corporate SaaS lavender --
+     this is the "practice / action" color (buttons, active nav, CTAs) */
+  --mozi-primary: #FF6B4A;
+  --mozi-primary-dark: #E6522E;
+  --mozi-primary-tint: #FFE8E0;
 
-  --mozi-green: #65c18c;
-  --mozi-green-dark: #429e6b;
+  /* Teal: calmer, distinct color for the clinical/therapist side of
+     the app, so it visually reads as a different kind of action
+     than "practice" (coral) */
+  --mozi-teal: #1F9E96;
+  --mozi-teal-dark: #136E68;
+  --mozi-teal-tint: #E1F3F1;
 
-  --mozi-yellow: #f6c85f;
-  --mozi-pink: #f3a6c8;
+  /* Gold: kept for rewards/streaks -- this is the "celebration" color
+     and should stay the most saturated, high-energy color in the UI */
+  --mozi-gold: #F6B93B;
+  --mozi-gold-dark: #C9890F;
 
-  --mozi-text: #302a3d;
-  --mozi-muted: #81788f;
+  /* Green stays for "positive progress" since that mapping is
+     meaningful (growth = green), not decorative */
+  --mozi-green: #4EAD78;
+  --mozi-green-dark: #2F8A5B;
+  --mozi-green-tint: #E4F6EC;
 
-  --mozi-border: #eae5f2;
+  --mozi-text: #2A2420;
+  --mozi-muted: #87796F;
+
+  --mozi-border: #ECE4DB;
 }
 
 * {
@@ -50,15 +65,22 @@ button {
   font-family: inherit;
 }
 
+/* Friendly, rounded display font for headings -- gives the product a
+   distinct personality instead of looking like a generic Inter-only
+   SaaS dashboard. Applied selectively via className="font-display". */
+.font-display {
+  font-family: "Baloo 2", Inter, sans-serif;
+}
+
 ::-webkit-scrollbar {
   width: 7px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f8f7fc;
+  background: var(--mozi-bg);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d8d0e8;
+  background: #E3D7C9;
   border-radius: 999px;
 }

@@ -1,0 +1,6 @@
+{
+  "name": "Mozi Speech Play",
+  "description": "Joyful storybook speech articulation and phoneme exploration studio for children, parents, and speech-language pathologists.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

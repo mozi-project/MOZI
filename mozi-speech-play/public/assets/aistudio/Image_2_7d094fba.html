@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>Mozi Speech Play</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&amp;family=Quicksand:wght@500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "on-tertiary-fixed": "#251a00",
+        "primary": "#006a67",
+        "tertiary-container": "#ba8c00",
+        "surface-container-high": "#e1e7ff",
+        "on-primary-fixed-variant": "#00504e",
+        "on-secondary": "#ffffff",
+        "inverse-primary": "#60d9d4",
+        "surface-bright": "#faf8ff",
+        "error": "#ba1a1a",
+        "inverse-surface": "#25304a",
+        "on-surface-variant": "#3d4948",
+        "surface-tint": "#006a67",
+        "on-secondary-fixed": "#3c0700",
+        "tertiary-fixed-dim": "#f7be29",
+        "on-tertiary": "#ffffff",
+        "error-container": "#ffdad6",
+        "on-background": "#0f1b34",
+        "surface-container-low": "#f2f3ff",
+        "on-primary-fixed": "#00201f",
+        "on-secondary-container": "#5a0f00",
+        "primary-fixed-dim": "#60d9d4",
+        "on-primary": "#ffffff",
+        "on-primary-container": "#003231",
+        "tertiary": "#785900",
+        "surface-dim": "#cfd9fb",
+        "inverse-on-surface": "#eef0ff",
+        "on-error": "#ffffff",
+        "surface-container-lowest": "#ffffff",
+        "outline-variant": "#bcc9c8",
+        "surface-container": "#e9edff",
+        "on-error-container": "#93000a",
+        "primary-container": "#13a4a0",
+        "outline": "#6d7a78",
+        "on-secondary-fixed-variant": "#8a1c00",
+        "secondary-fixed": "#ffdad2",
+        "secondary-fixed-dim": "#ffb4a2",
+        "surface-container-highest": "#d9e2ff",
+        "on-tertiary-fixed-variant": "#5b4300",
+        "secondary-container": "#ff5d35",
+        "surface-variant": "#d9e2ff",
+        "on-tertiary-container": "#3a2900",
+        "primary-fixed": "#7ff5f0",
+        "on-surface": "#0f1b34",
+        "tertiary-fixed": "#ffdf9d",
+        "background": "#faf8ff",
+        "surface": "#faf8ff",
+        "secondary": "#b42801"
+      },
+      "borderRadius": {
+        "DEFAULT": "4px",
+        "lg": "4px",
+        "xl": "4px",
+        "full": "9999px"
+      },
+      "spacing": {
+        "gutter": "1.5rem",
+        "space-xl": "3rem",
+        "gutter-mobile": "1rem",
+        "space-lg": "2rem",
+        "space-sm": "0.75rem",
+        "margin-mobile": "1.25rem",
+        "space-md": "1.25rem",
+        "space-xs": "0.5rem",
+        "margin": "2rem"
+      },
+      "fontFamily": {
+        "headline-sm": [
+          "Plus Jakarta Sans"
+        ],
+        "body-md": [
+          "Quicksand"
+        ],
+        "body-lg": [
+          "Quicksand"
+        ],
+        "label-lg": [
+          "Plus Jakarta Sans"
+        ],
+        "display-mobile": [
+          "Plus Jakarta Sans"
+        ],
+        "headline-md": [
+          "Plus Jakarta Sans"
+        ],
+        "headline-lg-mobile": [
+          "Plus Jakarta Sans"
+        ],
+        "headline-lg": [
+          "Plus Jakarta Sans"
+        ],
+        "label-md": [
+          "Plus Jakarta Sans"
+        ],
+        "display": [
+          "Plus Jakarta Sans"
+        ],
+        "body-xl": [
+          "Quicksand"
+        ]
+      },
+      "fontSize": {
+        "headline-sm": [
+          "22px",
+          {
+            "lineHeight": "30px",
+            "fontWeight": "700"
+          }
+        ],
+        "body-md": [
+          "18px",
+          {
+            "lineHeight": "26px",
+            "fontWeight": "500"
+          }
+        ],
+        "body-lg": [
+          "20px",
+          {
+            "lineHeight": "28px",
+            "fontWeight": "600"
+          }
+        ],
+        "label-lg": [
+          "18px",
+          {
+            "lineHeight": "24px",
+            "letterSpacing": "0.02em",
+            "fontWeight": "800"
+          }
+        ],
+        "display-mobile": [
+          "34px",
+          {
+            "lineHeight": "42px",
+            "letterSpacing": "-0.01em",
+            "fontWeight": "800"
+          }
+        ],
+        "headline-md": [
+          "26px",
+          {
+            "lineHeight": "34px",
+            "fontWeight": "700"
+          }
+        ],
+        "headline-lg-mobile": [
+          "28px",
+          {
+            "lineHeight": "36px",
+            "fontWeight": "800"
+          }
+        ],
+        "headline-lg": [
+          "36px",
+          {
+            "lineHeight": "44px",
+            "fontWeight": "800"
+          }
+        ],
+        "label-md": [
+          "16px",
+          {
+            "lineHeight": "20px",
+            "fontWeight": "700"
+          }
+        ],
+        "display": [
+          "48px",
+          {
+            "lineHeight": "56px",
+            "letterSpacing": "-0.02em",
+            "fontWeight": "800"
+          }
+        ],
+        "body-xl": [
+          "22px",
+          {
+            "lineHeight": "32px",
+            "fontWeight": "600"
+          }
+        ]
+      }
+    }
+  }
+}</script></head><body class="bg-[#FFF4DC] font-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 z-50 bg-[#FFF4DC] border-b-[1.5px] border-[#1F2A44]"><div class="h-20 max-w-7xl mx-auto px-gutter flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-sm"><div class="w-12 h-12 rounded-[4px] bg-primary-container border-[1.5px] border-[#1F2A44] flex items-center justify-center shadow-none"><span class="material-symbols-outlined text-[#1F2A44] text-[28px]">cruelty_free</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-on-surface leading-none tracking-tight">Mozi</span><span class="font-label-md text-label-md text-primary font-bold leading-tight">Speech Play</span></div></div><nav class="hidden xl:flex items-center gap-space-xs"><a aria-current="page" class="px-space-md py-space-xs rounded-[4px] font-label-md bg-primary text-on-primary border-[1.5px] border-[#1F2A44] shadow-none" data-path="child-home" href="#">Child Home</a><a class="px-space-md py-space-xs rounded-[4px] border-[1.5px] border-[#1F2A44] bg-[#FFF4DC] text-on-surface font-label-md text-label-md hover:bg-surface-container-high hover:text-on-surface" data-path="games" href="#">Games</a><a class="px-space-md py-space-xs rounded-[4px] border-[1.5px] border-[#1F2A44] bg-[#FFF4DC] text-on-surface font-label-md text-label-md hover:bg-surface-container-high hover:text-on-surface" data-path="playing-stage" href="#">Playing Stage</a><a class="px-space-md py-space-xs rounded-[4px] border-[1.5px] border-[#1F2A44] bg-[#FFF4DC] text-on-surface font-label-md text-label-md hover:bg-surface-container-high hover:text-on-surface" data-path="rewards" href="#">Rewards</a><a class="px-space-md py-space-xs rounded-[4px] border-[1.5px] border-[#1F2A44] bg-[#FFF4DC] text-on-surface font-label-md text-label-md hover:bg-surface-container-high hover:text-on-surface" data-path="practice-sheets" href="#">Practice Sheets</a><a class="px-space-md py-space-xs rounded-[4px] border-[1.5px] border-[#1F2A44] bg-[#FFF4DC] text-on-surface font-label-md text-label-md hover:bg-surface-container-high hover:text-on-surface" data-path="therapist-desk" href="#">Therapist Desk</a><a class="px-space-md py-space-xs rounded-[4px] border-[1.5px] border-[#1F2A44] bg-[#FFF4DC] text-on-surface font-label-md text-label-md hover:bg-surface-container-high hover:text-on-surface" data-path="admin-control" href="#">Admin Control</a></nav><div class="flex items-center gap-space-sm"><div class="flex items-center bg-surface-container-highest px-space-sm py-1 rounded-[4px] border-[1.5px] border-[#1F2A44] shadow-none"><span class="font-label-md text-label-md text-on-surface mr-2 hidden sm:inline">Role:</span><select class="bg-transparent font-label-md text-label-md text-primary font-extrabold focus:outline-none cursor-pointer"><option value="child">Little Explorer</option><option value="therapist">SLP Therapist</option><option value="admin">Clinic Admin</option></select></div><div class="w-8 h-8 rounded-[4px] bg-primary flex items-center justify-center border-[1.5px] border-[#1F2A44] shadow-none"><span class="material-symbols-outlined text-[#1F2A44] text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-[#FFF4DC]"><div class="max-w-7xl mx-auto px-gutter py-space-lg"><div class="flex flex-col w-full">
+<!-- Teal Hero Banner -->
+<section class="relative w-full bg-primary-container rounded-[4px] overflow-visible border-[1.5px] border-[#1F2A44] shadow-none">
+<!-- Starburst & Doodles Background (SVG Vector Art) -->
+<div class="absolute inset-0 pointer-events-none overflow-hidden rounded-[4px]">
+<svg class="absolute top-6 left-8 w-14 h-14 text-primary opacity-35" fill="currentColor" viewbox="0 0 100 100">
+<polygon points="50,0 62,35 98,35 68,57 79,91 50,70 21,91 32,57 2,35 38,35"></polygon>
+</svg>
+<svg class="absolute top-12 right-16 w-10 h-10 text-primary opacity-30" fill="currentColor" viewbox="0 0 100 100">
+<polygon points="50,0 62,35 98,35 68,57 79,91 50,70 21,91 32,57 2,35 38,35"></polygon>
+</svg>
+<svg class="absolute bottom-16 left-1/4 w-8 h-8 text-primary opacity-25" fill="currentColor" viewbox="0 0 100 100">
+<circle cx="50" cy="50" fill="none" r="30" stroke="currentColor" stroke-dasharray="10 10" stroke-width="8"></circle>
+</svg>
+<svg class="absolute top-8 left-1/2 w-6 h-6 text-primary opacity-30" fill="currentColor" viewbox="0 0 40 40">
+<circle cx="20" cy="20" r="8"></circle>
+</svg>
+</div>
+<!-- Hero Content & Character Stage -->
+<div class="relative z-10 px-gutter pt-space-xl pb-space-lg flex flex-col items-center text-center">
+<!-- Kid Badges: Level & Daily Streak -->
+<div class="inline-flex items-center gap-space-sm bg-primary px-space-md py-space-xs rounded-[4px] border-[1.5px] border-[#1F2A44] mb-space-md shadow-none">
+<span class="flex items-center gap-1 text-on-primary font-label-md text-label-md font-extrabold tracking-wide">
+<span class="material-symbols-outlined text-[20px]" style='color: rgb(31, 42, 68); font-variation-settings: "FILL" 1;'>local_fire_department</span>
+          Day 4 Streak!
+        </span>
+<span class="w-1.5 h-1.5 rounded-[4px] bg-primary-fixed"></span>
+<span class="text-primary-fixed font-label-md text-label-md">Explorer Aarav</span>
+</div>
+<!-- Main Headline with bold stamp feel -->
+<h1 class="font-display text-display text-on-primary tracking-tight max-w-2xl">
+        Hi Aarav! Ready to play?
+      </h1>
+<p class="font-headline-md text-headline-md text-surface-container-lowest font-medium mt-space-xs max-w-xl">
+        Let's explore today's sound quests together.
+      </p>
+<!-- Center Characters: Mozi Bunny & Sasa Snake -->
+<div class="relative w-full max-w-lg h-56 sm:h-64 mt-space-md flex items-end justify-center select-none">
+<!-- Sasa Speech Bubble -->
+<div class="absolute -top-3 left-4 sm:left-10 z-20 bg-surface-container-lowest px-space-md py-space-xs rounded-[4px] border-[1.5px] border-[#1F2A44] cursor-pointer shadow-none">
+<p class="font-label-md text-label-md text-on-surface font-extrabold flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[20px]" style='color: rgb(31, 42, 68); font-variation-settings: "FILL" 1;'>volume_up</span>
+            Hi, I'm Sasa! Sss-super!
+          </p>
+<!-- Speech Pointer -->
+<div class="absolute -bottom-2 left-8 w-3 h-3 bg-surface-container-lowest border-r-[1.5px] border-b-[1.5px] border-[#1F2A44] transform rotate-45"></div>
+</div>
+<!-- Mozi & Sasa Vector Character Display -->
+<div class="relative flex items-end justify-center gap-2 w-full h-full">
+<!-- Sasa the Snake SVG -->
+<div class="relative z-10 w-24 sm:w-28 h-36 sm:h-44 flex items-end">
+<svg class="w-full h-full" fill="none" viewbox="0 0 120 180">
+<!-- Snake body coils -->
+<path d="M40 160 C10 160 10 125 40 125 C80 125 80 90 45 90 C25 90 20 60 45 55 C70 50 85 20 50 20" stroke="#006A67" stroke-linecap="round" stroke-linejoin="round" stroke-width="26"></path>
+<path d="M40 160 C10 160 10 125 40 125 C80 125 80 90 45 90 C25 90 20 60 45 55 C70 50 85 20 50 20" stroke="#7FF5F0" stroke-linecap="round" stroke-linejoin="round" stroke-width="18"></path>
+<!-- Sasa Spots -->
+<circle cx="48" cy="120" fill="#006A67" r="5"></circle>
+<circle cx="36" cy="75" fill="#006A67" r="4.5"></circle>
+<!-- Sasa Head -->
+<ellipse cx="56" cy="22" fill="#7FF5F0" rx="22" ry="18"></ellipse>
+<!-- Big Smile -->
+<path d="M48 24 Q56 32 66 23" fill="none" stroke="#0F1B34" stroke-linecap="round" stroke-width="3.5"></path>
+<!-- Cheeks -->
+<ellipse cx="44" cy="24" fill="#FF5D35" rx="4" ry="2.5"></ellipse>
+<ellipse cx="68" cy="24" fill="#FF5D35" rx="4" ry="2.5"></ellipse>
+<!-- Big Friendly Eyes -->
+<ellipse cx="48" cy="14" fill="#0F1B34" rx="5" ry="6"></ellipse>
+<circle cx="46" cy="12" fill="#FFFFFF" r="2"></circle>
+<ellipse cx="62" cy="14" fill="#0F1B34" rx="5" ry="6"></ellipse>
+<circle cx="60" cy="12" fill="#FFFFFF" r="2"></circle>
+<!-- Cute Snake Tongue -->
+<path d="M66 27 L76 29 M76 29 L82 25 M76 29 L81 33" stroke="#B42801" stroke-linecap="round" stroke-width="2.5"></path>
+</svg>
+</div>
+<!-- Mozi the Bunny SVG -->
+<div class="relative z-10 w-48 sm:w-56 h-48 sm:h-56">
+<svg class="w-full h-full" fill="none" viewbox="0 0 220 220">
+<!-- Bunny Ears -->
+<path d="M65 85 C40 15 78 5 90 70 Z" fill="#FFDF9D"></path>
+<path d="M70 75 C52 25 74 15 84 65 Z" fill="#FF5D35" opacity="0.35"></path>
+<path d="M155 85 C180 15 142 5 130 70 Z" fill="#FFDF9D"></path>
+<path d="M150 75 C168 25 146 15 136 65 Z" fill="#FF5D35" opacity="0.35"></path>
+<!-- Bunny Round Chubby Body & Head -->
+<circle cx="110" cy="130" fill="#FFDF9D" r="70"></circle>
+<!-- Soft Belly Patch -->
+<ellipse cx="110" cy="150" fill="#FAF8FF" rx="42" ry="32"></ellipse>
+<!-- Blush Cheeks -->
+<circle cx="72" cy="136" fill="#FF5D35" opacity="0.45" r="12"></circle>
+<circle cx="148" cy="136" fill="#FF5D35" opacity="0.45" r="12"></circle>
+<!-- Big Joyful Eyes -->
+<ellipse cx="86" cy="118" fill="#0F1B34" rx="8" ry="11"></ellipse>
+<circle cx="83" cy="114" fill="#FFFFFF" r="3.5"></circle>
+<circle cx="89" cy="122" fill="#FFFFFF" r="1.5"></circle>
+<ellipse cx="134" cy="118" fill="#0F1B34" rx="8" ry="11"></ellipse>
+<circle cx="131" cy="114" fill="#FFFFFF" r="3.5"></circle>
+<circle cx="137" cy="122" fill="#FFFFFF" r="1.5"></circle>
+<!-- Button Nose -->
+<ellipse cx="110" cy="127" fill="#B42801" rx="5.5" ry="4.5"></ellipse>
+<!-- Happy Smile -->
+<path d="M100 134 C105 140 110 138 110 133 C110 138 115 140 120 134" fill="none" stroke="#0F1B34" stroke-linecap="round" stroke-width="4"></path>
+<!-- Chubby Bunny Paws -->
+<ellipse cx="64" cy="165" fill="#FFDF9D" rx="14" ry="10"></ellipse>
+<ellipse cx="156" cy="165" fill="#FFDF9D" rx="14" ry="10"></ellipse>
+<!-- Paw details -->
+<circle cx="62" cy="165" fill="#B42801" opacity="0.25" r="2.5"></circle>
+<circle cx="158" cy="165" fill="#B42801" opacity="0.25" r="2.5"></circle>
+</svg>
+</div>
+</div>
+</div>
+<!-- Action Button Area (Big Sunny Yellow chunky button) -->
+<div class="relative z-30 -mt-2">
+<a class="group inline-flex items-center gap-space-sm px-space-xl py-space-md rounded-[4px] bg-tertiary-fixed text-on-tertiary-fixed font-headline-md text-headline-md border-[1.5px] border-[#1F2A44] shadow-none" data-path="playing-stage" href="#">
+<span class="material-symbols-outlined text-[32px] text-[#1F2A44] font-extrabold" style='color: rgb(31, 42, 68); font-variation-settings: "FILL" 1;'>play_arrow</span>
+<span class="">Play now</span>
+<span class="material-symbols-outlined text-[30px]" style='color: rgb(31, 42, 68); font-variation-settings: "FILL" 1;'>arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Scalloped Wavy Divider Cutout at base of Hero -->
+<div class="w-full overflow-hidden leading-none relative z-10 text-background">
+<svg class="block w-full h-8 sm:h-12 text-background" fill="currentColor" preserveaspectratio="none" viewbox="0 0 1200 120">
+<path d="M0,0 C150,90 350,-40 500,45 C650,130 900,-20 1050,60 C1120,95 1170,80 1200,50 L1200,120 L0,120 Z"></path>
+</svg>
+</div>
+</section>
+<!-- Hand-Drawn Marginalia Stars & Notes -->
+<div class="flex items-center justify-between px-gutter py-space-sm pointer-events-none select-none">
+<div class="flex items-center gap-2 text-[#1F2A44] opacity-80">
+<span class="material-symbols-outlined text-[20px]" style="color: #1F2A44;">auto_awesome</span>
+<span class="font-label-md text-label-md font-bold tracking-widest uppercase text-[#1F2A44]">Target Sound: /S/ &amp; /Z/</span>
+</div>
+<div class="flex items-center gap-1 text-[#1F2A44] opacity-80">
+<span class="material-symbols-outlined text-[18px]" style="color: #1F2A44;">star</span>
+<span class="material-symbols-outlined text-[14px]" style="color: #1F2A44;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="color: #1F2A44;">star</span>
+</div>
+</div>
+<!-- "Today" Strip: 3 Tactile Mission Chips -->
+<section class="w-full my-space-md">
+<div class="flex items-center justify-between mb-space-sm px-gutter-mobile">
+<div class="flex items-center gap-space-xs">
+<span class="w-3.5 h-3.5 rounded-[4px] bg-secondary-container"></span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Today's Sound Quests</h2>
+</div>
+<span class="font-label-md text-label-md text-primary font-extrabold bg-surface-container px-space-sm py-1 rounded-[4px] border-[1.5px] border-[#1F2A44] shadow-none">
+        2 of 3 Done
+      </span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md"><!-- Mission 1: Pop 5 Balloons in Sound Balloon Pop -->
+<div class="relative flex items-center justify-between p-space-md bg-surface-container-lowest rounded-[4px] border-[1.5px] border-[#1F2A44] shadow-none">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 flex items-center justify-center">
+<span class="material-symbols-outlined text-[30px]" style="color: #1F2A44; font-variation-settings: 'FILL' 1;">bubble_chart</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Pop 5 balloons in Sound Balloon Pop</h3>
+<p class="font-body-md text-body-md text-on-surface-variant font-medium">Practice /S/ bursts</p>
+</div>
+</div>
+<div class="w-8 h-8 flex items-center justify-center" title="Completed">
+<span class="material-symbols-outlined text-[24px] font-extrabold" style="color: #1F2A44;">check</span>
+</div>
+</div>
+<!-- Mission 2: Say 3 Words -->
+<div class="relative flex items-center justify-between p-space-md bg-surface-container-lowest rounded-[4px] border-[1.5px] border-[#1F2A44] shadow-none">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 flex items-center justify-center">
+<span class="material-symbols-outlined text-[30px]" style="color: #1F2A44; font-variation-settings: 'FILL' 1;">record_voice_over</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Say 3 words</h3>
+<p class="font-body-md text-body-md text-on-surface-variant font-medium">"Sun", "Soup", "Star"</p>
+</div>
+</div>
+<div class="w-8 h-8 flex items-center justify-center" title="Completed">
+<span class="material-symbols-outlined text-[24px] font-extrabold" style="color: #1F2A44;">check</span>
+</div>
+</div>
+<!-- Mission 3: Sing 1 Song -->
+<div class="relative flex items-center justify-between p-space-md bg-surface-container-high rounded-[4px] border-[1.5px] border-[#1F2A44] shadow-none">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 flex items-center justify-center">
+<span class="material-symbols-outlined text-[30px]" style="color: #1F2A44; font-variation-settings: 'FILL' 1;">music_note</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Sing 1 song</h3>
+<p class="font-body-md text-body-md text-on-surface-variant font-medium">The Silly Snake Song</p>
+</div>
+</div>
+<button class="px-space-sm py-space-xs rounded-[4px] bg-secondary-container text-on-secondary font-label-md text-label-md border-[1.5px] border-[#1F2A44] shadow-none">
+    Start
+  </button>
+</div></div>
+</section>
+<!-- Large Card: 4 Chunky Activity Tiles -->
+<section class="w-full mt-space-lg mb-space-xl">
+<div class="bg-surface-container-lowest p-space-lg rounded-[4px] border-[1.5px] border-[#1F2A44] shadow-none">
+<!-- Card Section Header -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-xs pb-space-lg">
+<div>
+<span class="font-label-md text-label-md uppercase tracking-wider text-primary font-bold">Speech Adventures</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mt-1">Explore Aarav's World</h2>
+</div>
+<div class="flex items-center gap-space-xs text-on-surface-variant font-body-md text-body-md bg-surface-container px-space-md py-space-xs rounded-[4px] border-[1.5px] border-[#1F2A44] self-start sm:self-auto shadow-none">
+<span class="material-symbols-outlined text-[20px]" style='color: rgb(31, 42, 68); font-variation-settings: "FILL" 1;'>sound_detection_loud_sound</span>
+<span class="">Speech Engine: Ready</span>
+</div>
+</div>
+<!-- 4 Chunky Icon Tiles Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md"><!-- Tile 1: Games (Sound Balloon Pop) -->
+<div class="flex flex-col justify-between p-space-md bg-surface-container rounded-[4px] border-[1.5px] border-[#1F2A44] shadow-none">
+<div>
+<div class="w-12 h-12 flex items-center justify-start mb-space-md">
+<span class="material-symbols-outlined text-[36px]" style="color: #1F2A44; font-variation-settings: 'FILL' 1;">sports_esports</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Games</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+      Sound Balloon Pop: practice phoneme bursts and speech accuracy.
+    </p>
+</div>
+<div class="pt-space-md mt-space-sm">
+<a class="w-full inline-flex items-center justify-center gap-1.5 py-space-xs px-space-md rounded-[4px] bg-secondary text-on-secondary font-label-md text-label-md border-[1.5px] border-[#1F2A44] shadow-none" data-path="playing-stage" href="#">
+<span class="">Sound Balloon Pop</span>
+<span class="material-symbols-outlined text-[18px]" style="color: #FFFFFF;">sports_esports</span>
+</a>
+</div>
+</div>
+<!-- Tile 2: Practice Sheets -->
+<div class="flex flex-col justify-between p-space-md bg-surface-container rounded-[4px] border-[1.5px] border-[#1F2A44] shadow-none">
+<div>
+<div class="w-12 h-12 flex items-center justify-start mb-space-md">
+<span class="material-symbols-outlined text-[36px]" style="color: #1F2A44; font-variation-settings: 'FILL' 1;">menu_book</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Practice sheets</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+      Printable coloring boards and visual mouth position guides.
+    </p>
+</div>
+<div class="pt-space-md mt-space-sm">
+<a class="w-full inline-flex items-center justify-center gap-1.5 py-space-xs px-space-md rounded-[4px] bg-primary-container text-on-primary font-label-md text-label-md border-[1.5px] border-[#1F2A44] shadow-none" data-path="practice-sheets" href="#">
+<span class="">View (4)</span>
+<span class="material-symbols-outlined text-[18px]" style="color: #FFFFFF;">description</span>
+</a>
+</div>
+</div>
+<!-- Tile 3: Rewards -->
+<div class="flex flex-col justify-between p-space-md bg-surface-container rounded-[4px] border-[1.5px] border-[#1F2A44] shadow-none">
+<div>
+<div class="w-12 h-12 flex items-center justify-start mb-space-md">
+<span class="material-symbols-outlined text-[36px]" style="color: #1F2A44; font-variation-settings: 'FILL' 1;">military_tech</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Rewards</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+      Golden badges, costume hats for Mozi, and voice tokens.
+    </p>
+</div>
+<div class="pt-space-md mt-space-sm">
+<a class="w-full inline-flex items-center justify-center gap-1.5 py-space-xs px-space-md rounded-[4px] bg-tertiary-fixed text-on-tertiary-fixed font-label-md text-label-md border-[1.5px] border-[#1F2A44] shadow-none" data-path="rewards" href="#">
+<span class="material-symbols-outlined text-[18px]" style='color: rgb(31, 42, 68); font-variation-settings: "FILL" 1;'>lock_open</span>
+<span class="">3 Unlocked</span>
+</a>
+</div>
+</div>
+<!-- Tile 4: My Progress -->
+<div class="flex flex-col justify-between p-space-md bg-surface-container rounded-[4px] border-[1.5px] border-[#1F2A44] shadow-none">
+<div>
+<div class="w-12 h-12 flex items-center justify-start mb-space-md">
+<span class="material-symbols-outlined text-[36px]" style="color: #1F2A44; font-variation-settings: 'FILL' 1;">trending_up</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">My progress</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+      Weekly sound mastery, accuracy scores, and audio clips.
+    </p>
+</div>
+<div class="pt-space-md mt-space-sm">
+<a class="w-full inline-flex items-center justify-center gap-1.5 py-space-xs px-space-md rounded-[4px] bg-primary text-on-primary font-label-md text-label-md border-[1.5px] border-[#1F2A44] shadow-none" data-path="therapist-desk" href="#">
+<span class="material-symbols-outlined text-[18px]" style="color: #FFFFFF; font-variation-settings: 'FILL' 1;">stars</span>
+<span class="">Level 4</span>
+</a>
+</div>
+</div></div>
+</div>
+</section>
+<!-- Interactive Parent/Therapist Prompt Bar -->
+<aside class="w-full mb-space-lg p-space-md bg-surface-container-high rounded-[4px] border-[1.5px] border-[#1F2A44] flex flex-col md:flex-row items-center justify-between gap-space-md shadow-none">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 flex items-center justify-center">
+<span class="material-symbols-outlined text-[28px]" style="color: #1F2A44;">family_restroom</span>
+</div>
+<div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Speech Practice Helper</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">
+        Tip for today: Encourage Aarav to place tongue behind top teeth when practicing snake hisses in Sound Balloon Pop.
+      </p>
+</div>
+</div>
+<div class="flex items-center gap-space-xs flex-shrink-0">
+<button class="px-space-md py-space-xs rounded-[4px] bg-surface-container-lowest text-on-surface font-label-md text-label-md border-[1.5px] border-[#1F2A44] hover:bg-surface transition-colors shadow-none">
+      Listen to Example
+    </button>
+<a class="px-space-md py-space-xs rounded-[4px] bg-primary text-on-primary font-label-md text-label-md border-[1.5px] border-[#1F2A44] hover:bg-on-primary-fixed-variant transition-colors shadow-none" data-path="practice-sheets" href="#">
+      Print Helper Sheet
+    </a>
+</div>
+</aside>
+</div>
+<script>
+  // Simple micro-interaction for audio preview bubble click
+  document.addEventListener('DOMContentLoaded', () => {
+    const bubble = document.querySelector('.cursor-pointer');
+    if (bubble) {
+      bubble.addEventListener('click', () => {
+        bubble.classList.add('opacity-80');
+        setTimeout(() => {
+          bubble.classList.remove('opacity-80');
+        }, 300);
+      });
+    }
+  });
+</script></div></main><footer class="w-full bg-[#FFF4DC] border-t-[1.5px] border-[#1F2A44] py-space-lg"><div class="max-w-7xl mx-auto px-gutter flex flex-col md:flex-row items-center justify-between gap-space-md"><div class="flex items-center gap-space-sm"><div class="w-10 h-10 rounded-[4px] bg-secondary-container border-[1.5px] border-[#1F2A44] flex items-center justify-center shadow-none"><span class="material-symbols-outlined text-[#1F2A44] text-[20px]">verified</span></div><div class="flex flex-col text-left"><span class="font-label-md text-label-md text-on-surface">Mozi Clinician Guardrail</span><p class="font-body-md text-body-md text-on-surface-variant max-w-md">AI-assisted content is a draft for fun speech exploration, not a medical diagnosis.</p></div></div><div class="flex flex-wrap items-center gap-space-xs"><span class="px-space-sm py-1 rounded-[4px] border-[1.5px] border-[#1F2A44] bg-surface font-label-md text-label-md text-on-surface flex items-center gap-1 shadow-none"><span class="material-symbols-outlined text-[18px]" style="color: rgb(31, 42, 68);">child_care</span> Kid-Safe Certified</span><span class="px-space-sm py-1 rounded-[4px] border-[1.5px] border-[#1F2A44] bg-surface font-label-md text-label-md text-on-surface flex items-center gap-1 shadow-none"><span class="material-symbols-outlined text-[18px]" style="color: rgb(31, 42, 68);">lock</span> COPPA Compliant</span><span class="px-space-sm py-1 rounded-[4px] border-[1.5px] border-[#1F2A44] bg-surface font-label-md text-label-md text-on-surface flex items-center gap-1 shadow-none"><span class="material-symbols-outlined text-[18px]" style="color: rgb(31, 42, 68);">mic</span> Private Voice Data</span></div></div><div class="max-w-7xl mx-auto px-gutter pt-space-md text-center border-t border-outline-variant/30 mt-space-md"><p class="font-body-md text-body-md text-on-surface-variant">© 2025 Mozi Speech Interactive Inc. Designed for joyful speech articulation.</p></div></footer>
+</body></html>

@@ -1,0 +1,128 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: 'Plus Jakarta Sans', sans-serif;
+  --font-headline: 'Plus Jakarta Sans', sans-serif;
+  --font-label: 'Plus Jakarta Sans', sans-serif;
+  --font-body: 'Quicksand', sans-serif;
+
+  --color-primary: #006a67;
+  --color-primary-container: #13a4a0;
+  --color-primary-fixed: #7ff5f0;
+  --color-primary-fixed-dim: #60d9d4;
+  --color-on-primary: #ffffff;
+  --color-on-primary-container: #003231;
+
+  --color-secondary: #b42801;
+  --color-secondary-container: #ff5d35;
+  --color-on-secondary: #ffffff;
+  --color-secondary-fixed: #ffdad2;
+  --color-secondary-fixed-dim: #ffb4a2;
+
+  --color-tertiary: #785900;
+  --color-tertiary-container: #ba8c00;
+  --color-tertiary-fixed: #ffdf9d;
+  --color-tertiary-fixed-dim: #f7be29;
+  --color-on-tertiary-fixed: #251a00;
+
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f2f3ff;
+  --color-surface-container: #e9edff;
+  --color-surface-container-high: #e1e7ff;
+  --color-surface-container-highest: #d9e2ff;
+
+  --color-on-surface: #0f1b34;
+  --color-on-surface-variant: #3d4948;
+}
+
+@layer base {
+  body {
+    font-family: 'Quicksand', sans-serif;
+    background-color: #FFF4DC;
+    color: #0f1b34;
+    overscroll-behavior: none;
+  }
+}
+
+.font-display {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+}
+
+.font-headline-lg {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+}
+
+.font-headline-md {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+}
+
+.font-headline-sm {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+}
+
+.font-label-lg {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.font-label-md {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+}
+
+.font-body-xl {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 600;
+}
+
+.font-body-lg {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 600;
+}
+
+.font-body-md {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 500;
+}
+
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Hard ink tactile styles */
+.ink-border {
+  border: 1.5px solid #1F2A44;
+}
+
+.ink-border-2 {
+  border: 2px solid #1F2A44;
+}
+
+.ink-border-3 {
+  border: 3px solid #1F2A44;
+}
+
+.tactile-btn {
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.tactile-btn:active {
+  transform: translateY(2px);
+}
